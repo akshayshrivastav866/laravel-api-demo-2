@@ -7,6 +7,7 @@ use App\Department;
 
 class DepartmentsController extends Controller
 	{
+		// This function will create a new department. Post creation of a dept users can be tagged based on their department entry
 		function createDepartment( Request $request )
 			{
 				$department = new Department();
@@ -24,7 +25,7 @@ class DepartmentsController extends Controller
 							}
 						else
 							{
-								return [ $this->finalResponse( 'error', 'Unable to apply for loan!', '' ) ];
+								return [ $this->finalResponse( 'error', 'Unable to create department!', '' ) ];
 							}
 					}
 				catch ( Exception $e )

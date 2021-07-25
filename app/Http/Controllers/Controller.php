@@ -12,21 +12,6 @@ class Controller extends BaseController
 	{
 		use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-		// If we want to validate request we can pass username / id along with secret key on each request. To make sure that we do not take any invalid requests
-		// public function doesUserExist( $username, $secret )
-		// 	{
-		// 		$result = User::where( [ 'username' => $username, 'secret_key' => $secret ] )->first();
-
-		// 		if ( $result )
-		// 			{
-		// 				return true;
-		// 			}
-		// 		else
-		// 			{
-		// 				return [ $this->finalResponse( 'error', 'Invalid / Unauthorized access!', 'Are you sure you are making correct request?' ) ];
-		// 			}
-		// 	}
-
 		public function finalResponse( string $status = NULL, string $heading = NULL, string $message = NULL, array $data = NULL )
 			{
 				$status = ( empty ( $status ) ) ? 'error' : $status;

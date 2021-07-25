@@ -8,6 +8,7 @@ use App\EmployeeMeta;
 
 class EmployeesController extends Controller
 	{
+		// This function will check if a employee exists in DB or not. As we need to perform actions where emp_id is associated so we need to make sure that employee exsists or not
 		function employeeExists( $id )
 			{
 				if ( Employee::find( $id ) )
@@ -20,6 +21,7 @@ class EmployeesController extends Controller
 					}
 			}
 
+		// This fcuntion will create a new employee
 		function createEmployee( Request $request )
 			{
 				$validated = $request->validate( [ 'username' =>'required|unique:employees' ] );
@@ -36,15 +38,22 @@ class EmployeesController extends Controller
 						// Password should never be stored in plain format, so we will encrypt and store it in DB, you may use any other encryption methid like md5 / sha, etc
 						$employee->password = bcrypt( $request->password );
 
-						$result = $employee->save();
+						try
+							{
+								$result = $employee->save();
 
-						if ( $result )
-							{
-								return [ $this->finalResponse( 'success', 'User created!', 'Pleae login to continue.', [ 'emp_id' => $employee->id ] ) ];
+								if ( $result )
+									{
+										return [ $this->finalResponse( 'success', 'User created!', 'Pleae login to continue.', [ 'emp_id' => $employee->id ] ) ];
+									}
+								else
+									{
+										return [ $this->finalResponse() ];
+									}
 							}
-						else
+						catch ( Exception $e )
 							{
-								return [ $this->finalResponse() ];
+								$this->finalResponse();
 							}
 					}
 				else
@@ -53,6 +62,7 @@ class EmployeesController extends Controller
 					}
 			}
 
+		// This function will create employee meta data ( Address and contact )
 		function createEmployeeMetaData( Request $request )
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
@@ -64,19 +74,27 @@ class EmployeesController extends Controller
 						$employee_meta->address = $request->address;
 						$employee_meta->contact = $request->contact;
 
-						$result = $employee_meta->save();
+						try
+							{
+								$result = $employee_meta->save();
 
-						if ( $result )
-							{
-								return [ $this->finalResponse( 'success', 'User meta saved!', 'Your address and contact have been saved sucessfully.' ) ];
+								if ( $result )
+									{
+										return [ $this->finalResponse( 'success', 'User meta saved!', 'Your address and contact have been saved sucessfully.' ) ];
+									}
+								else
+									{
+										return [ $this->finalResponse() ];
+									}
 							}
-						else
+						catch ( Exception $e )
 							{
-								return [ $this->finalResponse() ];
+								$this->finalResponse();
 							}
 					}
 			}
 
+		// This function will display the detials of employee and its related meta_data
 		function viewEmployeeDetails( Request $request )
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
@@ -88,6 +106,7 @@ class EmployeesController extends Controller
 					}
 			}
 
+		// This function will delete employee and employee_metadata ( if any )
 		function deleteEmployeeData( Request $request )
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
@@ -108,5 +127,11 @@ class EmployeesController extends Controller
 								$this->finalResponse( '', 'Unable to delete employee!', '' );
 							}
 					}
+			}
+
+		// Employee can be searched based on address, contact number, name or username as per the urrent database structure. It can be modified as per needs
+		function searchEmployeeData( Request $request )
+			{
+				
 			}
 	}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 25, 2021 at 07:53 AM
+-- Generation Time: Jul 25, 2021 at 08:46 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.3.21
 
@@ -32,6 +32,8 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `id` int NOT NULL AUTO_INCREMENT,
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 is for inactive, 1 is for active',
   `name` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -50,6 +52,8 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `name` varchar(200) NOT NULL,
   `username` varchar(200) NOT NULL,
   `password` varchar(500) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -67,6 +71,8 @@ CREATE TABLE IF NOT EXISTS `employee_meta` (
   `employee_id` bigint NOT NULL,
   `address` varchar(2000) NOT NULL,
   `contact` varchar(15) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 COMMIT;

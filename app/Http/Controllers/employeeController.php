@@ -6,26 +6,26 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-// use App\User;
+use App\User;
 
 class Controller extends BaseController
 	{
 		use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
 		// If we want to validate request we can pass username / id along with secret key on each request. To make sure that we do not take any invalid requests
-		// public function doesUserExist( $username, $secret )
-		// 	{
-		// 		$result = User::where( [ 'username' => $username, 'secret_key' => $secret ] )->first();
+		public function doesUserExist( $username, $secret )
+			{
+				$result = User::where( [ 'username' => $username, 'secret_key' => $secret ] )->first();
 
-		// 		if ( $result )
-		// 			{
-		// 				return true;
-		// 			}
-		// 		else
-		// 			{
-		// 				return [ $this->finalResponse( 'error', 'Invalid / Unauthorized access!', 'Are you sure you are making correct request?' ) ];
-		// 			}
-		// 	}
+				if ( $result )
+					{
+						return true;
+					}
+				else
+					{
+						return [ $this->finalResponse( 'error', 'Invalid / Unauthorized access!', 'Are you sure you are making correct request?' ) ];
+					}
+			}
 
 		public function finalResponse( string $status = NULL, string $heading = NULL, string $message = NULL, array $data = NULL )
 			{

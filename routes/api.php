@@ -10,5 +10,9 @@ Route::middleware( 'auth:api' )->get( '/user', function ( Request $request )
         return $request->user();
     } );
 
+// For post related requests
 Route::post( 'createdepartment', [ DepartmentsController::class, 'createDepartment' ] );
 Route::post( 'createemployee', [ EmployeesController::class, 'createEmployee' ] );
+
+// For get realted requests
+Route::get( 'viewemployee/{emp_id}', [ EmployeesController::class, 'viewEmployee' ] );

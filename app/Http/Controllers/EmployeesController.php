@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Employee;
+use App\EmployeeMeta;
 
 class EmployeesController extends Controller
 	{
@@ -37,6 +38,25 @@ class EmployeesController extends Controller
 				else
 					{
 						return [ $this->finalResponse( 'info', 'User already exists!', 'Please choose a different username.' ) ];
+					}
+			}
+
+		function viewEmployee( Request $request )
+			{
+				if ( empty( $request->emp_id ) )
+					{
+						$this->finalResponse();
+					}
+				
+				$existence_result = Employee::find( $request->emp_id );
+
+				if ( $existence_result )
+					{
+						return [ $existence_result->makeHidden( ['password', 'created_at', 'updated_at'] ), [ 'meta_details' =>  EmployeeMeta::find( $request->emp_id ) ?: 'N/A' ] ];
+					}
+				else
+					{
+						$this->finalResponse( 'error', 'User does not exists!', 'Are you sure you are searching for a correct user?' );
 					}
 			}
 	}

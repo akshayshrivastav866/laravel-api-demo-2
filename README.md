@@ -14,7 +14,7 @@ Navigate to folder SQL Schema File in this project and you will find a file name
 
 If you are using POSTMAN. Please follow the below process
 
-1. Set request type to `POST`
+1. Set request type to `POST`or `GET` as defined below
 2. Set your base request URL
 3. Select body and then select x-www-form-urlencoded
 4. Below are list of APIs with required fields
@@ -23,11 +23,11 @@ If you are using POSTMAN. Please follow the below process
 
 PN: My local server was http://127.0.0.1:9090 You may change the settings as per you laravel environment
 
-1. http://127.0.0.1:9090/api/createdepartment
-2. http://127.0.0.1:9090/api/createemployee
-3. http://127.0.0.1:9090/api/viewemployee/<employee_id>
-4. http://127.0.0.1:9090/api/createemployeemeta
-5. http://127.0.0.1:9090/api/deleteemployee
+1. http://127.0.0.1:9090/api/createdepartment ( Request type: `POST` )
+2. http://127.0.0.1:9090/api/createemployee ( Request type: `POST` )
+3. http://127.0.0.1:9090/api/viewemployee/<employee_id> ( Request type: `GET` )
+4. http://127.0.0.1:9090/api/createemployeemeta ( Request type: `POST` )
+5. http://127.0.0.1:9090/api/deleteemployee ( Request type: `POST` )
 
 ### **Application Flow**
 

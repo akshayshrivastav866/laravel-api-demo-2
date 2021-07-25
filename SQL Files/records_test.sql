@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 25, 2021 at 08:46 AM
+-- Generation Time: Jul 25, 2021 at 09:12 AM
 -- Server version: 8.0.21
 -- PHP Version: 7.3.21
 
@@ -61,11 +61,11 @@ CREATE TABLE IF NOT EXISTS `employees` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employee_meta`
+-- Table structure for table `employee_metas`
 --
 
-DROP TABLE IF EXISTS `employee_meta`;
-CREATE TABLE IF NOT EXISTS `employee_meta` (
+DROP TABLE IF EXISTS `employee_metas`;
+CREATE TABLE IF NOT EXISTS `employee_metas` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 is for inactive, 1 is for active',
   `employee_id` bigint NOT NULL,

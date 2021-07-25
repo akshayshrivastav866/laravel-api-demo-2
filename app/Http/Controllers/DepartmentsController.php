@@ -9,16 +9,9 @@ class DepartmentsController extends Controller
 	{
 		function createDepartment( Request $request )
 			{
-				// echo 'here';
-				// exit();
-				// if ( ! $this->doesUserExist( $request->username, $request->secret ) )
-				// 	{
-				// 		return;
-				// 	}
-
 				$department = new Department();
 
-				$department->status = ( $request->status === 0 ) ? 0 : 1;
+				$department->status = empty( $request->status ) ? 0 : 1;
 				$department->name = $request->dept_name;
 
 				try

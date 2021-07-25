@@ -8,6 +8,18 @@ use App\EmployeeMeta;
 
 class EmployeesController extends Controller
 	{
+		function employeeExists( $id )
+			{
+				if ( Employee::find( $id ) )
+					{
+						return true;
+					}
+				else
+					{
+						$this->finalResponse();
+					}
+			}
+
 		function createEmployee( Request $request )
 			{
 				$validated = $request->validate( [ 'username' =>'required|unique:employees' ] );
@@ -41,22 +53,52 @@ class EmployeesController extends Controller
 					}
 			}
 
-		function viewEmployee( Request $request )
+		function createEmployeeMetaData( Request $request )
 			{
-				if ( empty( $request->emp_id ) )
+				if ( $this->employeeExists( $request->emp_id ) )
 					{
-						$this->finalResponse();
-					}
-				
-				$existence_result = Employee::find( $request->emp_id );
+						$employee_meta = new EmployeeMeta();
 
-				if ( $existence_result )
+						$employee_meta->status = empty( $request->status ) ? 0 : 1;
+						$employee_meta->employee_id = $request->emp_id;
+						$employee_meta->address = $request->address;
+						$employee_meta->contact = $request->contact;
+
+						$result = $employee_meta->save();
+
+						if ( $result )
+							{
+								return [ $this->finalResponse( 'success', 'User meta saved!', 'Your address and contact have been saved sucessfully.' ) ];
+							}
+						else
+							{
+								return [ $this->finalResponse() ];
+							}
+					}
+				else
 					{
-						return [ $existence_result->makeHidden( ['password', 'created_at', 'updated_at'] ), [ 'meta_details' =>  EmployeeMeta::find( $request->emp_id ) ?: 'N/A' ] ];
+						$this->finalResponse( '', 'Invalid employee request!', 'Are you sure you are searching for a correct employee?' );
+					}
+			}
+
+		function viewEmployeeDetails( Request $request )
+			{
+				if ( $this->employeeExists( $request->emp_id ) )
+					{
+						return [ $existence_result->makeHidden( ['password', 'created_at', 'updated_at'] ), [ 'meta_details' =>  EmployeeMeta::select( 'address','contact' )->where( 'employee_id' , $request->emp_id )->get() ] ];
+						
 					}
 				else
 					{
 						$this->finalResponse( 'error', 'User does not exists!', 'Are you sure you are searching for a correct user?' );
+					}
+			}
+
+		function deleteEmployeeData( Request $request )
+			{
+				if ( $this->employeeExists( $request->emp_id ) )
+					{
+						echo 'here';
 					}
 			}
 	}

@@ -13,6 +13,8 @@ Route::middleware( 'auth:api' )->get( '/user', function ( Request $request )
 // For post related requests
 Route::post( 'createdepartment', [ DepartmentsController::class, 'createDepartment' ] );
 Route::post( 'createemployee', [ EmployeesController::class, 'createEmployee' ] );
+Route::post( 'createemployeemeta', [ EmployeesController::class, 'createEmployeeMetaData' ] );
+Route::post( 'deleteemployee', [ EmployeesController::class, 'deleteEmployeeData' ] );
 
 // For get realted requests
-Route::get( 'viewemployee/{emp_id}', [ EmployeesController::class, 'viewEmployee' ] );
+Route::get( 'viewemployee/{emp_id}', [ EmployeesController::class, 'viewEmployeeDetails' ] );

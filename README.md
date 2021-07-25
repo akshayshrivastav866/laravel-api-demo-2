@@ -1,62 +1,74 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+### **Laravel API Demo App**
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Version** 8.5
 
-## About Laravel
+This app is a demo API app that will give you an idea of the working of APIs in Laravel ( Post and GET ).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### **Database setup**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Please open your localhost phpmyadmin / adminer, etc.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Navigate to folder SQL Schema File in this project and you will find a file named `records_test.sql`. Import that SQL file in you DBs list
 
-## Learning Laravel
+### **Request Format and type**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+If you are using POSTMAN. Please follow the below process
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Set request type to `POST`
+2. Set your base request URL
+3. Select body and then select x-www-form-urlencoded
+4. Below are list of APIs with required fields
 
-## Laravel Sponsors
+### **List of APIs**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+PN: My local server was http://127.0.0.1:9090 You may change the settings as per you laravel environment
 
-### Premium Partners
+1. http://127.0.0.1:9090/api/createdepartment
+2. http://127.0.0.1:9090/api/createemployee
+3. http://127.0.0.1:9090/api/viewemployee/<employee_id>
+4. http://127.0.0.1:9090/api/createemployeemeta
+5. http://127.0.0.1:9090/api/deleteemployee
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+### **Application Flow**
 
-## Contributing
+PN: You will receive JSON responses to every API request
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. You are a new user so visit `/api/createdepartment`to create a department first. Fields required for this request are `status` & `dept_name`
 
-## Code of Conduct
+    Expected Response: `{"status":"success","heading":"Department created successfully!","message":"You may now map employees under this department.","data":{"dept_id":<your_dept_id_here>}}`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. You need to now login so visit `/api/createemployee`. Fields required for this request are `status`, `dept_id`( this will be yeilded from the response of first api call in step 1 ), `name`, `username`, & `password`( Pls note your password will be encrypted so kindly memorize it )
 
-## Security Vulnerabilities
+    Expect Response: `{"status":"success","heading":"User created!","message":"Pleae login to continue.","data":{"emp_id":<your_emp_id_here>}}`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. If you want to view any employee data you may do so by visiting `api/viewemployee/<employee_id>` Please send  `employee_id` that we received in step 2
 
-## License
+    Expected Response: `[
+    {
+        "id": 1,
+        "status": 1,
+        "department_id": 3,
+        "name": "<name_here>",
+        "username": "<username_here>"
+    },
+    {
+        "meta_details": [
+            {
+                "address": "<address_here>",
+                "contact": "<number_here>"
+            },
+            {
+                "address": "<address_here>",
+                "contact": "<number_here>"
+            }
+        ]
+    }
+]`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. If you want to add meta data for employee like address / contact you may head to `/api/createemployeemeta` Fields required for this request are `emp_id`, `status`, `contact` & `address`
+
+    Expected Response: `{"status":"success","heading":"User meta saved!","message":"Your address and contact have been saved sucessfully."}`
+
+5. If you want to delete data for an employee you may head to `/api/deleteemployee` Fields required for this request are `emp_id`
+
+	Expected Response: `{"status":"success","heading":"Employee deleted!","message":"Employee data was deleted successfully."}`

@@ -16,7 +16,7 @@ class EmployeesController extends Controller
 					}
 				else
 					{
-						$this->finalResponse();
+						$this->finalResponse( 'error', 'Employee does not exists!', 'Are you sure you are searching for a correct user?' );
 					}
 			}
 
@@ -75,22 +75,16 @@ class EmployeesController extends Controller
 								return [ $this->finalResponse() ];
 							}
 					}
-				else
-					{
-						$this->finalResponse( '', 'Invalid employee request!', 'Are you sure you are searching for a correct employee?' );
-					}
 			}
 
 		function viewEmployeeDetails( Request $request )
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
 					{
-						return [ $existence_result->makeHidden( ['password', 'created_at', 'updated_at'] ), [ 'meta_details' =>  EmployeeMeta::select( 'address','contact' )->where( 'employee_id' , $request->emp_id )->get() ] ];
+						$id = $request->emp_id;
+
+						return [ Employee::find( $id )->makeHidden( ['password', 'created_at', 'updated_at'] ), [ 'meta_details' =>  EmployeeMeta::select( 'address','contact' )->where( 'employee_id' , $id )->get() ] ];
 						
-					}
-				else
-					{
-						$this->finalResponse( 'error', 'User does not exists!', 'Are you sure you are searching for a correct user?' );
 					}
 			}
 
@@ -98,7 +92,21 @@ class EmployeesController extends Controller
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
 					{
-						echo 'here';
+						if ( Employee::where( 'id', $request->emp_id )->delete() )
+							{
+								if ( EmployeeMeta::where( 'employee_id', $request->emp_id )->delete() )
+									{
+										$this->finalResponse( 'success', 'Employee deleted!', 'Employee data was deleted successfully.' );
+									}
+								else
+									{
+										$this->finalResponse( 'warning', 'Unable to delete employee meta data', 'Employee data deleted but unable to delete employee meta data' );
+									}
+							}
+						else
+							{
+								$this->finalResponse( '', 'Unable to delete employee!', '' );
+							}
 					}
 			}
 	}

@@ -62,39 +62,16 @@ class EmployeesController extends Controller
 					}
 			}
 
-		// This function will create employee meta data ( Address and contact )
-		function createEmployeeMetaData( Request $request )
+		// This function will update details of an employee
+		function editEmployeeData( Request $request )
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
 					{
-						$employee_meta = new EmployeeMeta();
-
-						$employee_meta->status = empty( $request->status ) ? 0 : 1;
-						$employee_meta->employee_id = $request->emp_id;
-						$employee_meta->address = $request->address;
-						$employee_meta->contact = $request->contact;
-
-						try
-							{
-								$result = $employee_meta->save();
-
-								if ( $result )
-									{
-										return [ $this->finalResponse( 'success', 'User meta saved!', 'Your address and contact have been saved sucessfully.' ) ];
-									}
-								else
-									{
-										return [ $this->finalResponse() ];
-									}
-							}
-						catch ( Exception $e )
-							{
-								$this->finalResponse();
-							}
+						echo 'Request reached';
 					}
 			}
 
-		// This function will display the detials of employee and its related meta_data
+		// This function will display the details of employee and its related meta_data
 		function viewEmployeeDetails( Request $request )
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
@@ -133,5 +110,37 @@ class EmployeesController extends Controller
 		function searchEmployeeData( Request $request )
 			{
 				
+			}
+
+		// This function will create employee meta data ( Address and contact )
+		function createEmployeeMetaData( Request $request )
+			{
+				if ( $this->employeeExists( $request->emp_id ) )
+					{
+						$employee_meta = new EmployeeMeta();
+
+						$employee_meta->status = empty( $request->status ) ? 0 : 1;
+						$employee_meta->employee_id = $request->emp_id;
+						$employee_meta->address = $request->address;
+						$employee_meta->contact = $request->contact;
+
+						try
+							{
+								$result = $employee_meta->save();
+
+								if ( $result )
+									{
+										return [ $this->finalResponse( 'success', 'User meta saved!', 'Your address and contact have been saved sucessfully.' ) ];
+									}
+								else
+									{
+										return [ $this->finalResponse() ];
+									}
+							}
+						catch ( Exception $e )
+							{
+								$this->finalResponse();
+							}
+					}
 			}
 	}

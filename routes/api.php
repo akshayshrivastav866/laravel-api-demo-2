@@ -15,6 +15,7 @@ Route::post( 'createdepartment', [ DepartmentsController::class, 'createDepartme
 
 /* Employee creation, view, delete, search section */
 Route::post( 'createemployee', [ EmployeesController::class, 'createEmployee' ] );
+Route::post( 'editemployee', [ EmployeesController::class, 'editEmployeeData' ] );
 Route::get( 'viewemployee/{emp_id}', [ EmployeesController::class, 'viewEmployeeDetails' ] );
 Route::post( 'deleteemployee', [ EmployeesController::class, 'deleteEmployeeData' ] );
 Route::post( 'searchemployee', [ EmployeesController::class, 'searchEmployeeData' ] );

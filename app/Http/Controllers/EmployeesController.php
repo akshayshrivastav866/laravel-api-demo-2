@@ -109,7 +109,17 @@ class EmployeesController extends Controller
 		// Employee can be searched based on address, contact number, name or username as per the urrent database structure. It can be modified as per needs
 		function searchEmployeeData( Request $request )
 			{
-				
+				$result = Employee::leftJoin( 'employee_metas', 'employees.id', '=', 'employee_metas.employee_id' )->where( 'employees.username', 'like', '%' . $request->search_query . '%' )->
+				orWhere( 'employees.name', 'like', '%' . $request->search_query . '%' )->orWhere( 'employee_metas.address', 'like', '%' . $request->search_query . '%' )->orWhere( 'employee_metas.contact', 'like', '%' . $request->search_query . '%' )->select( 'employees.name' )->get();
+
+				if ( ! empty( $result ) )
+					{
+						return $result;
+					}
+				else
+					{
+						$this->finalResponse( 'error', 'No records found!', 'No matching employee records found for ' );
+					}
 			}
 
 		// This function will create employee meta data ( Address and contact )

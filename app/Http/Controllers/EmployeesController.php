@@ -114,7 +114,7 @@ class EmployeesController extends Controller
 
 				if ( ! empty( $result ) )
 					{
-						return $result;
+						$this->finalResponse( 'success', 'Records found!', 'Following are the results', [ 'emp_names' => $result ] );
 					}
 				else
 					{

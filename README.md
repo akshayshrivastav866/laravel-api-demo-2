@@ -29,6 +29,7 @@ PN: My local server was http://127.0.0.1:9090 You may change the settings as per
 4. http://127.0.0.1:9090/api/createemployeemeta ( Request type: `POST` )
 5. http://127.0.0.1:9090/api/deleteemployee ( Request type: `POST` )
 5. http://127.0.0.1:9090/api/searchemployee ( Request type: `POST` )
+5. http://127.0.0.1:9090/api/editemployee ( Request type: `POST` )
 
 ### **Application Flow**
 
@@ -77,3 +78,7 @@ PN: You will receive JSON responses to every API request
 6. If you want to search data for an employee you may head to `/api/searchemployee` Fields required for this request are `search_query`
 
     Expected Response: `{"status":"success","heading":"Records found!","message":"Following are the results","data":{"emp_names":[{"name":"<emp_name>"},{"name":"<emp_name>"}]}}`
+
+7. If you want to edit data for an employee you may head to `/api/editemployee` Fields required for this request are `emp_id`& `name`
+
+    Expected Response: `{"status":"success","heading":"Record updated!","message":"Employee data has been updated successfully."}`

@@ -67,7 +67,16 @@ class EmployeesController extends Controller
 			{
 				if ( $this->employeeExists( $request->emp_id ) )
 					{
-						echo 'Request reached';
+						$result = Employee::where( 'id', $request->emp_id )->update( [ 'name' => $request->name ] );
+
+						if ( ! empty( $result ) )
+							{
+								$this->finalResponse( 'success', 'Record updated!', 'Employee data has been updated successfully.' );
+							}
+						else
+							{
+								$this->finalResponse( '', 'Unable to update record!', '' );
+							}
 					}
 			}
 
